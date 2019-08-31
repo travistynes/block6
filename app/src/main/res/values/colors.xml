@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#333333</color>
+    <color name="colorPrimaryDark">#252525</color>
+    <color name="colorAccent">#383838</color>
+    <color name="mainBackground">#FCFCFC</color>
+    <color name="labelTextColor">#62ABC8</color>
+    <color name="balanceButtonColor">#FCFCFC</color>
+    <color name="controlNormal">#FCFCFC</color>
+    <color name="controlHighlight">#9E9E9E</color>
+    <color name="controlActivated">#FA4C4C</color>
+    <color name="editTextColor">#8B8B8B</color>
+    <color name="inputStroke">#E4E4E4</color>
+    <color name="addressInfoBackground">#333333</color>
+    <color name="lineItemBackground">#FFFFFF</color>
+    <color name="lineItemStroke">#E0E0E0</color>
+    <color name="lineItemDivider">#F1F1F1</color>
+    <color name="sentItemBackground">#fcfeff</color>
+    <color name="sentItemStroke">#E4E4E4</color>
+    <color name="blockedItemStroke">#333333</color>
+    <color name="blockedItemDivider">#E0E0E0</color>
+</resources>
