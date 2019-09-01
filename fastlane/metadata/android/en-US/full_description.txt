@@ -1,0 +1,1 @@
+Block6 is an SMS app that makes it easy to block numbers. It provides a simple interface with few options, and no ads.
