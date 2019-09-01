@@ -1,1 +1,1 @@
-SMS app that makes it easy to block messages from numbers you don't want to see.
+Block6 is an SMS app that makes it easy to block messages from numbers you don't want to see.

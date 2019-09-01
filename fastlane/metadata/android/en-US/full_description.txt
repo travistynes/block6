@@ -1,1 +1,7 @@
-Block6 is an SMS app that makes it easy to block numbers. It provides a simple interface with few options, and no ads.
+Block6 is an SMS app that makes it easy to block numbers. It provides a simple interface with few options, and no ads, in contrast to many of the other SMS apps available.
+
+Block6 is intended mainly for phones running Android versions less than 7.0. It targets Android version 4.4 KitKat (API Level 19) and above. It also works fine on Android 9 Pie.
+
+Android 7.0 introduced better built-in support for blocking numbers so this app is probably less useful on versions 7+.
+
+Block6 is free and open source on Github at https://github.com/travistynes/block6. Feel free to send feedback, pull requests, or use the code for your own purpose.
