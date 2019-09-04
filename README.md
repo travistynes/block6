@@ -6,7 +6,7 @@ Block6 is an SMS application that makes it easy to block text messages from phon
 
 Block6 is intended mainly for phones running Android versions less than 7.0. It targets Android version 4.4 KitKat (API Level 19) and above. It also works fine on Android 9 Pie.
 
-Android 7.0 introduced better built-in support for blocking numbers so this app is probably less useful on versions 7+.
+Android 7.0 introduced better [built-in support](https://source.android.com/devices/tech/connect/block-numbers) for blocking numbers so this app is probably less useful on versions 7+.
 
 ### Get It
 
