@@ -34,8 +34,11 @@ public class AllMessagesActivity extends AppCompatActivity {
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		boolean showMessageAddress = true;
+		boolean highlightUnread = true;
+
 		ListView smsItemList = findViewById(R.id.smsItemList);
-		SMSListAdapter adapter = new SMSListAdapter(this, true);
+		SMSListAdapter adapter = new SMSListAdapter(this, showMessageAddress, highlightUnread);
 		smsItemList.setAdapter(adapter);
 
 		setSmsItemClickListener(smsItemList);
@@ -66,7 +69,8 @@ public class AllMessagesActivity extends AppCompatActivity {
 		SMSListAdapter adapter = (SMSListAdapter)smsItemList.getAdapter();
 		adapter.clear();
 
-		List<SimpleSMSMessage> messages = SmsUtil.getTopMessages(this);
+		int limitDays = 0;
+		List<SimpleSMSMessage> messages = SmsUtil.getTopMessages(this, limitDays);
 
 		// Filter out messages from blocked numbers.
 		AsyncTask.execute(() -> {

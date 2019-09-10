@@ -57,8 +57,11 @@ public class ComposeSMSActivity extends AppCompatActivity implements Observer {
 		TextView contactInfo = findViewById(R.id.contactInfo);
 		contactInfo.setText(contactInfoText);
 
+		boolean showMessageAddress = false;
+		boolean highlightUnread = false;
+
 		ListView smsItemList = findViewById(R.id.smsItemList);
-		SMSListAdapter adapter = new SMSListAdapter(this, false);
+		SMSListAdapter adapter = new SMSListAdapter(this, showMessageAddress, highlightUnread);
 		smsItemList.setAdapter(adapter);
 
 		// Load all SMS messages from this number.

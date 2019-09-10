@@ -7,11 +7,12 @@ import java.util.Map;
 
 public class SimpleSMSMessage implements Comparable<SimpleSMSMessage> {
 	public static String[] PROJECTION = {
-			Telephony.Sms.TYPE,
 			Telephony.Sms._ID,
+			Telephony.Sms.TYPE,
 			Telephony.Sms.ADDRESS,
 			Telephony.Sms.BODY,
-			Telephony.Sms.DATE
+			Telephony.Sms.DATE,
+			Telephony.Sms.READ
 	};
 
 	private Map<String, String> map = new HashMap<>();
@@ -32,6 +33,10 @@ public class SimpleSMSMessage implements Comparable<SimpleSMSMessage> {
 
 	public long getDate() {
 		return Long.parseLong(this.map.get(Telephony.Sms.DATE));
+	}
+
+	public boolean isRead() {
+		return Integer.parseInt(this.map.get(Telephony.Sms.READ)) == 1;
 	}
 
 	/**

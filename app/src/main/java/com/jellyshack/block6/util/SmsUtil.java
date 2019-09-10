@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SmsUtil {
-	private static DateFormat DATE_FORMAT = new SimpleDateFormat("MMM d 'at' h:mm a");
+	private static DateFormat DATE_FORMAT = new SimpleDateFormat("MMM d, yyyy 'at' h:mm a");
 
 	private static List<SimpleSMSMessage> getMessages(Context context, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		if(sortOrder == null) {
@@ -71,22 +71,25 @@ public class SmsUtil {
 	}
 
 	/**
-	 * Gets the most recent message from every number.
+	 * Gets the most recent message from every number in the past limitDays days.
+	 * If limitDays = 0, there is effectively no limit.
 	 * @param context
 	 * @return
 	 */
-	public static List<SimpleSMSMessage> getTopMessages(Context context) {
+	public static List<SimpleSMSMessage> getTopMessages(Context context, int limitDays) {
 		List<SimpleSMSMessage> messages = new ArrayList<>();
 
+		String ts = limitDays > 0 ? String.valueOf(System.currentTimeMillis() - ((1000L * 60 * 60 * 24) * limitDays)) : "0";
+
 		String[] projection = { "distinct " + Telephony.Sms.ADDRESS };
-		String selection = null;
-		String[] selectionArgs = null;
+		String selection = "date > ?";
+		String[] selectionArgs = new String[] { ts };
 		String sortOrder = null;
 
-		// Get list of all addresses (numbers) that we've received a message from.
+		// Get list of all addresses (numbers) that we've sent or received a message from within the past n days.
 		List<String> addresses = new ArrayList<>();
 
-		try(Cursor cursor = context.getContentResolver().query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
+		try(Cursor cursor = context.getContentResolver().query(Telephony.Sms.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
 			if (cursor != null) {
 				while(cursor.moveToNext()) {
 					int idx = cursor.getColumnIndex(Telephony.Sms.ADDRESS);
@@ -96,15 +99,19 @@ public class SmsUtil {
 			}
 		}
 
-		// Get the most recently received message from every address.
+		// Get the most recently sent or received message from every address within the past n days.
 		projection = SimpleSMSMessage.PROJECTION;
-		selection = "address = ?";
+		selection = "address = ? and date > ?";
 		sortOrder = "date desc limit 1";
 
 		for(String address : addresses) {
-			selectionArgs = new String[] { address };
+			if(address == null) {
+				continue;
+			}
 
-			try (Cursor cursor = context.getContentResolver().query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
+			selectionArgs = new String[] { address, ts };
+
+			try (Cursor cursor = context.getContentResolver().query(Telephony.Sms.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
 				if (cursor != null) {
 					while (cursor.moveToNext()) {
 						SimpleSMSMessage message = new SimpleSMSMessage();

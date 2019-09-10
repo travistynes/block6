@@ -17,10 +17,12 @@ public class SMSListAdapter extends BaseAdapter {
 	private LayoutInflater layoutInflater;
 	private List<SimpleSMSMessage> messages = new ArrayList<>();
 	private boolean showMessageAddress;
+	private boolean highlightUnread;
 
-	public SMSListAdapter(Context context, boolean showMessageAddress) {
+	public SMSListAdapter(Context context, boolean showMessageAddress, boolean highlightUnread) {
 		this.layoutInflater = LayoutInflater.from(context);
 		this.showMessageAddress = showMessageAddress;
+		this.highlightUnread = highlightUnread;
 	}
 
 	@Override
@@ -35,7 +37,11 @@ public class SMSListAdapter extends BaseAdapter {
 		if(type == Telephony.Sms.MESSAGE_TYPE_SENT) {
 			item.setBackgroundResource(R.drawable.sent_item_background);
 		} else {
-			item.setBackgroundResource(R.drawable.received_item_background);
+			if(!message.isRead() && this.highlightUnread) {
+				item.setBackgroundResource(R.drawable.unread_item_background);
+			} else {
+				item.setBackgroundResource(R.drawable.received_item_background);
+			}
 		}
 
 		TextView smsDate = (TextView)item.findViewById(R.id.smsDate);

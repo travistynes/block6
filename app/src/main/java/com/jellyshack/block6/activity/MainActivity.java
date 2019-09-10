@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
-import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -60,8 +59,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
 			}
 		});
 
+		boolean showMessageAddress = true;
+		boolean highlightUnread = true;
+
 		ListView smsItemList = findViewById(R.id.smsItemList);
-		SMSListAdapter adapter = new SMSListAdapter(this, true);
+		SMSListAdapter adapter = new SMSListAdapter(this, showMessageAddress, highlightUnread);
 		smsItemList.setAdapter(adapter);
 
 		setSmsItemClickListener(smsItemList);
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 		// Check if this is the default SMS app.
 		if(checkIfDefaultSMSApp()) {
 			// Load unread messages.
-			loadUnreadMessages();
+			loadTopMessages();
 		}
 	}
 
@@ -108,12 +110,13 @@ public class MainActivity extends AppCompatActivity implements Observer {
 		});
 	}
 
-	private void loadUnreadMessages() {
+	private void loadTopMessages() {
 		ListView smsItemList = findViewById(R.id.smsItemList);
 		SMSListAdapter adapter = (SMSListAdapter)smsItemList.getAdapter();
 		adapter.clear();
 
-		List<SimpleSMSMessage> messages = SmsUtil.getUnreadMessages(this);
+		int limitDays = 30;
+		List<SimpleSMSMessage> messages = SmsUtil.getTopMessages(this, limitDays);
 
 		if(!messages.isEmpty()) {
 			adapter.loadMessages(messages);

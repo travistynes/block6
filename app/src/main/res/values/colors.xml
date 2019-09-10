@@ -17,6 +17,8 @@
     <color name="lineItemDivider">#F1F1F1</color>
     <color name="sentItemBackground">#fcfeff</color>
     <color name="sentItemStroke">#E4E4E4</color>
+    <color name="unreadItemBackground">#5494DAFF</color>
+    <color name="unreadItemStroke">#FA4C4C</color>
     <color name="blockedItemStroke">#333333</color>
     <color name="blockedItemDivider">#E0E0E0</color>
 </resources>
