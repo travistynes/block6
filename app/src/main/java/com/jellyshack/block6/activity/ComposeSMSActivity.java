@@ -10,6 +10,7 @@ import android.provider.Telephony;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -45,11 +46,23 @@ public class ComposeSMSActivity extends AppCompatActivity implements Observer {
 		// Get data from the intent that started this activity.
 		Intent intent = getIntent();
 
-		if(intent.hasExtra(Telephony.Sms.ADDRESS)) {
+		if(intent.getAction().equals(Intent.ACTION_SENDTO) && intent.getData().getScheme().equals("smsto")) {
+			// Compose activity started from an smsto intent. Parse out the phone number.
+			this.normalizedNumber = PhoneNumber.normalizeNumber(intent.getData().getSchemeSpecificPart());
+
+			// The intent could also have set the SMS body that it wants to be sent.
+			if(intent.hasExtra("sms_body")) {
+				String message = intent.getStringExtra("sms_body");
+
+				EditText composeText = (EditText)findViewById(R.id.composeText);
+				composeText.setText(message);
+			}
+		} else if(intent.hasExtra(Telephony.Sms.ADDRESS)) {
 			this.normalizedNumber = PhoneNumber.normalizeNumber(intent.getStringExtra(Telephony.Sms.ADDRESS));
 		} else {
 			// Leave activity.
 			this.finish();
+			return;
 		}
 
 		String contactInfoText = this.normalizedNumber;
