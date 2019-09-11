@@ -46,7 +46,7 @@ public class ComposeSMSActivity extends AppCompatActivity implements Observer {
 		// Get data from the intent that started this activity.
 		Intent intent = getIntent();
 
-		if(intent.getAction().equals(Intent.ACTION_SENDTO) && intent.getData().getScheme().equals("smsto")) {
+		if(intent.getAction() != null && intent.getAction().equals(Intent.ACTION_SENDTO) && intent.getData() != null && intent.getData().getScheme().equals("smsto")) {
 			// Compose activity started from an smsto intent. Parse out the phone number.
 			this.normalizedNumber = PhoneNumber.normalizeNumber(intent.getData().getSchemeSpecificPart());
 
