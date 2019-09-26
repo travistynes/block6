@@ -26,11 +26,14 @@ import androidx.appcompat.widget.Toolbar;
 import com.jellyshack.block6.R;
 import com.jellyshack.block6.SMSListAdapter;
 import com.jellyshack.block6.data.DB;
+import com.jellyshack.block6.data.Number;
 import com.jellyshack.block6.util.PhoneNumber;
 import com.jellyshack.block6.util.SimpleSMSMessage;
 import com.jellyshack.block6.util.SmsObservable;
 import com.jellyshack.block6.util.SmsUtil;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -118,11 +121,34 @@ public class MainActivity extends AppCompatActivity implements Observer {
 		int limitDays = 30;
 		List<SimpleSMSMessage> messages = SmsUtil.getTopMessages(this, limitDays);
 
-		if(!messages.isEmpty()) {
-			adapter.loadMessages(messages);
-		}
+		// Filter out messages from blocked numbers.
+		AsyncTask.execute(() -> {
+			List<Number> blockedNumbers = DB.getInstance(this).numberDAO().getAll();
+			List<String> blocked = new ArrayList<>();
 
-		showOrHideMessages();
+			for(Number number : blockedNumbers) {
+				blocked.add(number.getNumber());
+			}
+
+			Iterator<SimpleSMSMessage> iterator = messages.iterator();
+			while(iterator.hasNext()) {
+				SimpleSMSMessage sms = iterator.next();
+				String address = PhoneNumber.normalizeNumber(sms.get(Telephony.Sms.ADDRESS));
+
+				if(blocked.contains(address)) {
+					iterator.remove();
+				}
+			}
+
+			runOnUiThread(() -> {
+				// Load messages into list adapter.
+				if(!messages.isEmpty()) {
+					adapter.loadMessages(messages);
+				}
+
+				showOrHideMessages();
+			});
+		});
 	}
 
 	private void showOrHideMessages() {

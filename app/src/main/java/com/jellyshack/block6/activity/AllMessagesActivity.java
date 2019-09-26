@@ -90,14 +90,16 @@ public class AllMessagesActivity extends AppCompatActivity {
 					iterator.remove();
 				}
 			}
+
+			runOnUiThread(() -> {
+				// Load messages into list adapter.
+				if(!messages.isEmpty()) {
+					adapter.loadMessages(messages);
+				}
+
+				showOrHideMessages();
+			});
 		});
-
-		// Load messages into list adapter.
-		if(!messages.isEmpty()) {
-			adapter.loadMessages(messages);
-		}
-
-		showOrHideMessages();
 	}
 
 	private void showOrHideMessages() {

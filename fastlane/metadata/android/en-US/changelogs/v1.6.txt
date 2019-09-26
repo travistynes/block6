@@ -1,0 +1,1 @@
+Release v1.6 fixes a bug that was showing messages from blocked numbers on the main screen.
