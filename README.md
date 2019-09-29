@@ -10,7 +10,11 @@ Android 7.0 introduced better [built-in support](https://source.android.com/devi
 
 ### Get It
 
-You can download Block6 from the F-Droid app store [here](https://f-droid.org/). Google has recently stopped allowing apps that request SMS permissions onto the Google Play store without going through a lengthy approval process. Most apps still end up rejected after applying for an exception. Check out F-Droid for an alternative to the Google Play store. In addition, all apps on F-Droid are made free by the app developers.
+You can download Block6 from the [F-Droid app store](https://f-droid.org/). Google has recently stopped allowing apps that request SMS permissions onto the Google Play store without going through a lengthy approval process. Most apps still end up rejected after applying for an exception. Check out F-Droid for an alternative to the Google Play store. In addition, all apps on F-Droid are made free by the app developers.
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.jellyshack.block6/)
 
 ### Open Source
 
